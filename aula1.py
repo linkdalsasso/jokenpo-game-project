@@ -1,6 +1,6 @@
 import pyautogui
 from models.model import Jogador, papel, pedra, tesoura, Computador
-from random import randint
+import random
 from time import sleep
 
 
@@ -10,11 +10,29 @@ def main():
     menu(pontos, compontos)
 
 
+def opcao_jog(opt):
+    if opt.lower() == 'pedra':
+        return pedra
+    elif opt.lower() == 'papel':
+        return papel
+    else:
+        return tesoura
+
+
+def opcao_comput(comput_opt):
+    if comput_opt.lower() == 'pedra':
+        return pedra
+    elif comput_opt.lower() == 'papel':
+        return papel
+    else:
+        return tesoura
+
+
 def menu(pontos: int, compontos: int) -> None:
     # print(f'1 - {pedra}, 2 - {papel}, 3 - {tesoura}')
     # opt = int(input('Selecione a opção desejada: '))
-    opt = int(pyautogui.confirm(f'1 - Pedra , 2 - Papel , 3 - Tesoura ', buttons=['1', '2', '3']))
-    comput_opt = randint(1, 3)
+    opt = str(pyautogui.confirm(f'Clique na opção desejada', buttons=['Pedra', 'Papel', 'Tesoura']))
+    comput_opt = random.choice(['Pedra', 'Papel', 'Tesoura'])
 
     pyautogui.alert('JOOOOOOOOOOOO')
     sleep(1)
@@ -23,10 +41,9 @@ def menu(pontos: int, compontos: int) -> None:
     pyautogui.alert('POOOOOOOOOOOO')
     sleep(1)
 
-    # Pedra
-    if opt == 1 and comput_opt == 1 or opt == 2 and comput_opt == 2 or opt == 3 and comput_opt == 3:
-        opt2 = str((pyautogui.confirm(f'Você Jogou:\n {pedra}\n'
-                                      f'O computador jogou:\n {pedra}\n\n'
+    if opt == 'Pedra' and comput_opt == 'Pedra' or opt == 'Papel' and comput_opt == 'Papel' or opt == 'Tesoura' and comput_opt == 'Tesoura':
+        opt2 = str((pyautogui.confirm(f'Você Jogou:\n{opt}\n {opcao_jog(opt)}\n'
+                                      f'O computador jogou:\n{comput_opt}\n {opcao_comput(comput_opt)}\n\n'
                                       'Empate !!!!! \n\n'
                                       f'Pontuação: Jogador: {pontos}, Computador: {compontos}\n\n'
                                       'Deseja continuar jogando?: ', buttons=['Sim', 'Não'])))
@@ -35,10 +52,11 @@ def menu(pontos: int, compontos: int) -> None:
         else:
             pyautogui.alert('Até mais')
             exit()
-    elif opt == 1 and comput_opt == 2 or opt == 2 and comput_opt == 3 or opt == 3 and comput_opt == 1:
+
+    elif opt == 'Pedra' and comput_opt == 'Papel' or opt == 'Papel' and comput_opt == 'Tesoura' or opt == 'Tesoura' and comput_opt == 'Pedra':
         compontos += 1
-        opt2 = str((pyautogui.confirm(f'Você Jogou:\n {pedra}\n'
-                                      f'O computador jogou:\n {papel}\n\n'
+        opt2 = str((pyautogui.confirm(f'Você Jogou:\n{opt}\n {opcao_jog(opt)}\n'
+                                      f'O computador jogou:\n{comput_opt}\n {opcao_comput(comput_opt)}\n\n'
                                       'Perdeu !!!!! \n\n'
                                       f'Pontuação: Jogador: {pontos}, Computador: {compontos}\n\n'
                                       'Deseja continuar jogando?: ', buttons=['Sim', 'Não'])))
@@ -47,10 +65,10 @@ def menu(pontos: int, compontos: int) -> None:
         else:
             pyautogui.alert('Até mais')
             exit()
-    elif opt == 1 and comput_opt == 3 or opt == 2 and comput_opt == 1 or opt == 3 and comput_opt == 2:
+    elif opt == 'Pedra' and comput_opt == 'Tesoura' or opt == 'Papel' and comput_opt == 'Pedra' or opt == 'Tesoura' and comput_opt == 'Papel':
         pontos += 1
-        opt2 = str((pyautogui.confirm(f'Você Jogou:\n {pedra}\n'
-                                      f'O computador jogou:\n {tesoura}\n\n'
+        opt2 = str((pyautogui.confirm(f'Você Jogou:\n{opt}\n {opcao_jog(opt)}\n'
+                                      f'O computador jogou:\n{comput_opt}\n {opcao_comput(comput_opt)}\n\n'
                                       'GANHOU !!!!! \n\n'
                                       f'Pontuação: Jogador: {pontos}, Computador: {compontos}\n\n'
                                       'Deseja continuar jogando?: ', buttons=['Sim', 'Não'])))
